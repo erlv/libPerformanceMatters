@@ -11,7 +11,7 @@ all:
 	#static replace
 	${CC} libmyimplementation_static.c -c -o myimplementation_static.o
 	ar rcs libmylib.a myimplementation_static.o
-	${CC} -static replace_main.c -o replace_static.exe -L./ -lmylib
+	${CC} -static replace_main.c -o replace_static.exe -L./ -lmylib -lm -DSTATIC_LINK
 		
 	# Dynamic replace
 	${CC} libmyimplementation_dynamic.c -c -fPIC -o myimplementation_dynamic.o
