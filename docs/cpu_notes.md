@@ -34,7 +34,7 @@ Our simplest CPU at least should support:
 
 For a single instruction it should run through the following graph.
 
-![Instruction execution steps](https://upload.wikimedia.org/wikipedia/commons/9/9e/Pipeline_MIPS.png)
+![Instruction execution steps](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/instruction_execution.png)
 
 ###  The importance of Instruction Pipeline
 For each instruction, we need all the above 5 steps, while only step 3 is the execution, and only step 4 could reflect the whole processor's state since only at this point we could get the values updated. If each step takes 1 cycle to finsh, the whole instruction execution will take 5 cycles. Which means after each instruction finish, we need to wait for 5 cycles for the next instruction to finish.
@@ -42,39 +42,53 @@ For each instruction, we need all the above 5 steps, while only step 3 is the ex
 
 If we use instruction to pipeline all the instructions, we could only wait for one cycle for the next instruction to finish. Take the following 4-stage pipeline processor as an example.
 
-![4-stage pipelined instructions](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Pipeline%2C_4_stage.svg/627px-Pipeline%2C_4_stage.svg.png)
+![4-stage pipelined instructions](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/instruction_pipeline.png)
 
 For the above pipeline, each instruction is split into at-most 4-steps to run. In theory, if we split instruction into more steps, each step will take shorter time to run, and then we could increase the CPU frequency, and then the latency between two adjuscent instruction finish will be smaller. However, as the pipeline goes deeper, more cycle is needed if we pre-execute the wrong direction for a branch instruction. Therefore there is a trade off here.
+
+
+
+
+### The evolution of ARM Cortex Micro Architecture
+
+#### ARM Cortex-A7 Micro Architecture
+Cortex-A7 is in-order execution.
+![ARM Cortex-A7](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/arm_cortexa7.png)
+
+#### ARM Cortex-A9 Micro Architecture
+Cortex-A9 is out of order execution.
+![ARM Cortex-A9](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/arm_cortexa9.jpg)
+
+#### ARM Cortex-A15 Micro Architecture
+Cortex-A15 is out of order execution.
+![ARM Cortex-A15](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/arm_cortexa15.jpg)
 
 
 ### The evolution of Intel X86 Micro Architecture
 For the last few years, Intel X86 processor keep improving its micro architecture for better performance.
 
 #### 2006 Intel Core 2 Micro Architecture
-![Intel Core 2 Architecture](https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Intel_Core2_arch.svg/518px-Intel_Core2_arch.svg.png)
+![Intel Core 2 Architecture](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/intel_core2.png)
 
 
 #### 2008 Intel Nehalem Micro Architecture
-![Intel Nehalem Micro Architecture](https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Intel_Nehalem_arch.svg/614px-Intel_Nehalem_arch.svg.png)
+![Intel Nehalem Micro Architecture](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/intel_nehalem.png)
 
 
 #### 2011 Intel Sandy Bridge Micro Architecture
 
-![Intel Sandy Bridge Micro Architecture](http://cfile29.uf.tistory.com/image/1859B3244C91F1759E90C7)
+![Intel Sandy Bridge Micro Architecture](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/intelsandybridge.jpg)
 
 #### 2013 Intel Haswell Micro Architecture
 
-![Intel Haswell Micro Architecture](http://images.anandtech.com/reviews/cpu/intel/Haswell/Architecture/haswellexec.png)
+![Intel Haswell Micro Architecture](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/intel_haswellexec.png)
 
 #### 2015 Intel Skylake Micro Architecture
 
-![Intel Skylake Micro Architecture](http://www.info.univ-angers.fr/~richer/ens/l3info/ao/img/intel_skylake.png)
+![Intel Skylake Micro Architecture](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/intel_skylake.png)
 
 
 
-
-
-### The evolution of ARM Cortex Micro Architecture
 
 ## Why we need optimization based on the architecture?
 
