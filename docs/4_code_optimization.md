@@ -1,4 +1,7 @@
-#### C Intrinsic VS Embeded Assembly
+# Code Optimizations
+This page focus on how to modify/write our C/C++ or embedded assembly code to improve performance
+
+## C Intrinsic VS Embeded Assembly
 
  C Intrinsics could generally get the same performance improvement if we write the code correctly, since most of the time we are optimizing hot functions and loops. In most of the case we rely on SIMD extensions to optimize the code, and compiler already have intrinsic/type support for such kind of extension.
 

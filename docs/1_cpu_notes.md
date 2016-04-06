@@ -1,4 +1,4 @@
-# CPU Micro Architecture Notes
+# CPU Micro Architecture
 
 ## Introduction
 

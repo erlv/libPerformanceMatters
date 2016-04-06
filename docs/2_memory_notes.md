@@ -1,4 +1,4 @@
-# Notes about Memory Hierarchy of the Computer
+# Memory Hierarchy of the Computer
 
 ## Performance factors of different level of memory
 
