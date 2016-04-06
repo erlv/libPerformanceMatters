@@ -124,6 +124,18 @@ gprof is a good tool to get the hot function while the program is running. It is
 `gmon.out` file contain the timing information. `gprof` command will read the `gmon.out` file automatically, and get the information about hot functions.
 
 ### Oprofile
+Oprofile could not only tell you the hot function, but also a lot of performance counter values which are very useful to find out why the program runs slowly.
+- [Performance Counters which oprofile can tell you on ARM Cortex-A7](http://oprofile.sourceforge.net/docs/armv7-ca7-events.php)
+- [Performance Counters which oprofile can tell you on Intel Broadwell](oprofile.sourceforge.net/docs/intel-broadwell-events.php)
+- [A list of CPUs Oprofile currently support](http://oprofile.sourceforge.net/docs/)
+
+The performance counters are usually the counters supported by the microarchitecture. Different microarchitecture might have different performance counters, but usually the following counters are useful on most of the platform.
+- L1/L2/L3 Cache Hit/Miss/Refill/Access
+- TLB refill
+- Branch predictable run/ Branch miss predicated
+- CPU clock
+- etc
+
 
 
 ### Compiler Options
