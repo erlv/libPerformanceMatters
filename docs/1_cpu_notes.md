@@ -89,6 +89,14 @@ For the last few years, Intel X86 processor keep improving its micro architectur
 ![Intel Skylake Micro Architecture](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/intel_skylake.png)
 
 
+## SIMD Instruction Extensions
+
+To improve the performance, both ARM and Intel introduced SIMD instructions.
+- ARM Neon
+- Intel SSE/AVX
+
+
+
 
 ## The normal Operation cost supported by CPU
 Following is the table based on the X86 CPU.
@@ -118,6 +126,14 @@ Jump or call | 0 | 1 - 2
 
 
 
+## Increasing ILP
+
+### Out-of-Order VS Very Long Instruction Word
+Out-of-Order(OoO) relys on hardware support in CPU to improve ILP. While Very Long Instruction Word(VLIW) relies more on compiler dependence analysis to figure out the instructions which do not have dependece and could run simutaniously. 
+
+OoO consumes more power while running, VLIW needs a powerful compiler which is hard to implement and maintain. Altough VLIW failed as general purpose processor, it is still very popular in the low-power embeded DSP applications.
+
+
 
 ## Why we need optimization based on the micro architecture?
 If the code need a lot of computation, we need to run a lot of instructions. 
@@ -129,16 +145,12 @@ However, it is hard to always take advantage of them all without carefully modif
 code, since we write our code sequentially, and meanwhile there is a lot of dependencies
 here and there in our code.
 
+
 ## How to Optimize the code based on the micro architecture
 
 The answer is  try to increase Instruction Level Parallelism (ILP) and Data Level Parallelism (DLP)
 
-### Increasing ILP
 
-#### Out-of-Order VS Very Long Instruction Word
-Out-of-Order(OoO) relys on hardware support in CPU to improve ILP. While Very Long Instruction Word(VLIW) relies more on compiler dependence analysis to figure out the instructions which do not have dependece and could run simutaniously. 
-
-OoO consumes more power while running, VLIW needs a powerful compiler which is hard to implement and maintain. Altough VLIW failed as general purpose processor, it is still very popular in the low-power embeded DSP applications.
 
 #### General Optimizations for ILP
 
@@ -146,25 +158,7 @@ OoO consumes more power while running, VLIW needs a powerful compiler which is h
 
 #####
 
-### Increasing DLP
 
-CPU SIMD Instruction Extension
-- ARM Neon
- - 128bit SIMD register. 
-  - 2-way 64bit double/int64_t
-  - 4-way 32bit float/int32_t
-  - 8-way 16bit int16_t
-  - 16-way 8bit int8_t
- - Designed like DSP instruction set.
- - Additional compiler type check based on the vector types
-- Intel SSE/AVX/AVX512
- -  128bit SIMD SSE register/256bit SIMD AVX register/ 512bit SIMD AVX512 register
-  - 128bit/256bit integer
-  - 128bit/256bit 4-way/8-way float
-  - 128bit/256bit 2-way/4-way double
- - Designed like register operation instruction set.
- - The type checking only based on the whole register type.
- 
 
 
 ## Reference
