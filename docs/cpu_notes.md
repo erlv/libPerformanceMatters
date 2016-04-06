@@ -25,14 +25,22 @@ Typically, The program should run like the following way in a CPU:
  5. Add `$PC` by 4 (usually)
 
 Our simplest CPU at least should support:
+
 1. Instruction Fetch
 2. Instruction Decoding
 3. Instruction Execution
 4. Instruction WriteBack
 5. Update `$PC` register when necessary.
- 
+
+For a single instruction it should run through the following graph.
+
+![Instruction execution steps](https://upload.wikimedia.org/wikipedia/commons/9/9e/Pipeline_MIPS.png)
 
 ###  The importance of Instruction Pipeline
+For each instruction, we need all the above 5 steps, while only step 3 is the execution, and only step 4 could reflect the whole processor's state since only at this point we could get the values updated.
+
+If each step takes 1 cycle to finsh, the whole instruction execution will take 5 cycles.
+
 
 ### The evolution of Intel X86 Micro Architecture
 
