@@ -1,17 +1,45 @@
-# Optimization based on CPU Architecture Notes
-## The code of the software
-虽然写的是C代码，但是程序员实际是在指定处理器要执行的指令序列. 为了提升性能，CPU设计工程师几十年来都在调优CPU架构，提升频率，增加指令级并行。
+# Optimizations based on CPU Micro Architecture
+## Introduction
 
-我们需要优化我们的C代码（确切的说是在处理器上执行的指令序列），使得它能充分利用底层CPU提供的指令集并行支持，缩短我们代码的运行时间，提升程序性能。
+Although we are writing C/C++ or higher language code, we are in fact specifing the instruction sequences a processor/computer should do. Therefore to improve the performance, we need to make our instruction sequences run as fast as it could.
+
+For this page, we only focus on Instruction Level Parallel, which basically based on the single core/micro-architecture of the processor to improve the performance, while for other level of performance improvement,  there will be several different pages/posts for them.
+
+To improve the performance, the CPU designers trys to improve the CPU microarchitecture for decades, not only by increase the frequency of the processor, but also by increasing the ILP (Instruction Level Parallel).
+
+We need to optimize our code ( the instruction sequences) to take advantage of the underlying CPU's ILP support.
+
 
 ## The design of CPU architecture
 
-### The importance of Instruction Pipeline
+### A simplest CPU design
+Typically, The program should run like the following way in a CPU:
 
- CPU X86 I7， ARM Cortex-A7微架构
+1. Load the executable file into main memory
+2. Set the `$PC` register to the start address of the `.text` section in the memory
+3. While `$PC` != end address of `.text` section
+ 1. Load the data from memory address in `$PC` to CPU 
+ 2. Decode the instruction, figure out the registers which the instruction will use/def, and also the immediate numbers or memory locations in the instruction if necessary
+ 3. Execute the instruction operation
+ 4. write the result back to the register/ memory
+ 5. Add `$PC` by 4 (usually)
+
+Our simplest CPU at least should support:
+1. Instruction Fetch
+2. Instruction Decoding
+3. Instruction Execution
+4. Instruction WriteBack
+5. Update `$PC` register when necessary.
+ 
+
+###  The importance of Instruction Pipeline
+
+### The evolution of Intel X86 Micro Architecture
+
+
+### The evolution of ARM Cortex Micro Architecture
 
 ## Why we need optimization based on the architecture?
-硬件已经确定，软件代码可以频繁修改。
 
 
 ## The Memory Hierarchy of the Computer Architecture
