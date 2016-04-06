@@ -73,3 +73,9 @@ assembly is the instruction sequence of your code. It is the intermediate level 
  - `objdump -S` directly analyse the binary (executable or object) file, and get the instruction sequences which will be executed.
  - `gcc -S` generated assembly by the `gcc` compiler. `gcc` compiler analyse the C code, and based on the C code and the target architecture to generate assembly.
  - `as` eats the compiler generated assembly, and then generate object file which could be used by `objdump -S`. Sometimes, on some architecture, `as` might automatically expand assembly macro into multiple instructions, or combine several instructions into an assembly macro. We could treat `objdump -S` generated assembly as the final assembly.
+ 
+ 
+ 
+## References
+- [Oprofile](http://oprofile.sourceforge.net/news/)
+- [Gprof](https://users.cs.duke.edu/~ola/courses/programming/gprof.html) 

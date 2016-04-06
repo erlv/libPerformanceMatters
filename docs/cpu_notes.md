@@ -90,10 +90,6 @@ For the last few years, Intel X86 processor keep improving its micro architectur
 
 
 
-
-## Why we need optimization based on the architecture?
-
-
 ## The normal Operation cost supported by CPU
 Following is the table based on the X86 CPU.
 - Typical Latency:  how many cycles the instruction will takes
@@ -121,18 +117,37 @@ Mem write (cached) | 3 - 4 | 1
 Jump or call | 0 | 1 - 2
 
 
-## How to Optimize the code
 
-### Instruction Level Parallelism
+
+## Why we need optimization based on the micro architecture?
+If the code need a lot of computation, we need to run a lot of instructions. 
+Since the architecture have many function unit, like multiple load/store unit, 
+multiple ALU, etc. If we take advantage of them all, we could improve the performance
+a lot. 
+
+However, it is hard to always take advantage of them all without carefully modifing the
+code, since we write our code sequentially, and meanwhile there is a lot of dependencies
+here and there in our code.
+
+## How to Optimize the code based on the micro architecture
+
+The answer is  try to increase Instruction Level Parallelism (ILP) and Data Level Parallelism (DLP)
+
+### Increasing ILP
+
 #### Out-of-Order VS Very Long Instruction Word
 Out-of-Order(OoO) relys on hardware support in CPU to improve ILP. While Very Long Instruction Word(VLIW) relies more on compiler dependence analysis to figure out the instructions which do not have dependece and could run simutaniously. 
 
-OoO consumes more power while running, VLIW needs a powerful compiler which is hard to implement and maintain.
+OoO consumes more power while running, VLIW needs a powerful compiler which is hard to implement and maintain. Altough VLIW failed as general purpose processor, it is still very popular in the low-power embeded DSP applications.
 
 #### General Optimizations for ILP
 
+##### Loop Unrolling
 
-### Data-Level Parallelism
+#####
+
+### Increasing DLP
+
 CPU SIMD Instruction Extension
 - ARM Neon
  - 128bit SIMD register. 
@@ -151,7 +166,7 @@ CPU SIMD Instruction Extension
  - The type checking only based on the whole register type.
  
 
+
 ## Reference
-- [Oprofile](http://oprofile.sourceforge.net/news/)
-- [Gprof](https://users.cs.duke.edu/~ola/courses/programming/gprof.html)
+
 - [Optimizing subroutines in assembly language An optimization guide for x86 platforms By Agner Fog](www.agner.org/optimize/optimizing_assembly.pdf)
