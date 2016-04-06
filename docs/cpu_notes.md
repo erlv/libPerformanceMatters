@@ -37,9 +37,12 @@ For a single instruction it should run through the following graph.
 ![Instruction execution steps](https://upload.wikimedia.org/wikipedia/commons/9/9e/Pipeline_MIPS.png)
 
 ###  The importance of Instruction Pipeline
-For each instruction, we need all the above 5 steps, while only step 3 is the execution, and only step 4 could reflect the whole processor's state since only at this point we could get the values updated.
+For each instruction, we need all the above 5 steps, while only step 3 is the execution, and only step 4 could reflect the whole processor's state since only at this point we could get the values updated. If each step takes 1 cycle to finsh, the whole instruction execution will take 5 cycles. Which means after each instruction finish, we need to wait for 5 cycles for the next instruction to finish.
 
-If each step takes 1 cycle to finsh, the whole instruction execution will take 5 cycles.
+
+If we use instruction to pipeline all the instructions, we could only wait for one cycle for the next instruction to finish. Take the following 4-stage pipeline processor as an example.
+
+![4-stage pipelined instructions](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Pipeline%2C_4_stage.svg/627px-Pipeline%2C_4_stage.svg.png)
 
 
 ### The evolution of Intel X86 Micro Architecture
