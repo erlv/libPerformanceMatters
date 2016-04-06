@@ -51,7 +51,17 @@ For the above pipeline, each instruction is split into at-most 4-steps to run. I
 
 ### The evolution of ARM Cortex Micro Architecture
 
+#### ARM Cortex-A7 Micro Architecture
+Cortex-A7 is in-order execution.
+![ARM Cortex-A7](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/arm_cortexa7.png)
 
+#### ARM Cortex-A9 Micro Architecture
+Cortex-A9 is out of order execution.
+![ARM Cortex-A9](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/arm_cortexa9.jpg)
+
+#### ARM Cortex-A15 Micro Architecture
+Cortex-A15 is out of order execution.
+![ARM Cortex-A15](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/arm_cortexa15.jpg)
 
 
 ### The evolution of Intel X86 Micro Architecture
