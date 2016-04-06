@@ -27,8 +27,30 @@
 
 
 ## The normal Operation cost supported by CPU
+Following is the table based on the X86 CPU.
+- Typical Latency:  how many cycles the instruction will takes
+- Typical Reciprocal Throught: The reciprocal of how many same instructions could be run simutanously if there is no dependence among them.
+ 
 
-
+Operation | Typical latency  | Typical reciprocal throughput
+--------- | ---------------- | ------------------------------
+Int move | 1 | 0.33 - 0.5
+Int add | 1 | 0.33 - 0.5
+Int Boolean | 1 | 0.33 - 1
+Int shift | 1 | 0.33 - 1
+Int Mul | 3 - 10 | 1 - 2 
+Int Div | 20 - 80 | 20 - 40
+FP add | 3 - 6 | 1
+FP Mul | 4 - 8 | 1 - 2
+FP Div | 20 - 45 | 20 - 45
+SIMD int add | 1 - 2 | 0.5 - 2
+SIMD int Mul | 3 - 7 | 1 - 2
+SIMD FP add | 3 - 5 | 1 - 2
+SIMD FP Mul | 4 - 7 | 1 - 2
+SIMD FP Div | 20 - 60 | 20 - 60
+Mem read (cached) | 3 - 4 | 0.5 - 1
+Mem write (cached) | 3 - 4 | 1
+Jump or call | 0 | 1 - 2
 
 
 ## How to Optimize the code
@@ -150,3 +172,8 @@ assembly is the instruction sequence of your code. It is the intermediate level 
  - `as` eats the compiler generated assembly, and then generate object file which could be used by `objdump -S`. Sometimes, on some architecture, `as` might automatically expand assembly macro into multiple instructions, or combine several instructions into an assembly macro. We could treat `objdump -S` generated assembly as the final assembly.
 
 ### Compiler Options
+
+## Reference
+- [Oprofile](http://oprofile.sourceforge.net/news/)
+- [Gprof](https://users.cs.duke.edu/~ola/courses/programming/gprof.html)
+- [Optimizing subroutines in assembly language An optimization guide for x86 platforms By Agner Fog](www.agner.org/optimize/optimizing_assembly.pdf)
