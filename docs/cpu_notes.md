@@ -125,6 +125,7 @@ gprof is a good tool to get the hot function while the program is running. It is
 
 ### Oprofile
 Oprofile could not only tell you the hot function, but also a lot of performance counter values which are very useful to find out why the program runs slowly.
+
 - [Performance Counters which oprofile can tell you on ARM Cortex-A7](http://oprofile.sourceforge.net/docs/armv7-ca7-events.php)
 - [Performance Counters which oprofile can tell you on Intel Broadwell](oprofile.sourceforge.net/docs/intel-broadwell-events.php)
 - [A list of CPUs Oprofile currently support](http://oprofile.sourceforge.net/docs/)
@@ -136,9 +137,13 @@ The performance counters are usually the counters supported by the microarchitec
 - CPU clock
 - etc
 
-
-
-### Compiler Options
+Oprofile have a rich support on X86 platform, but on ARM Linux, especially Android, the support is very limited. But it is also very helpful to get an idea about the performance feature of the program.
 
 ### Assembly analysis
+Basically, no matter what kind of platform you are try to run your program, assembly is the most straight forward way to know how your program will run on the platform. And for C/C++ language and embeded assembly, compiler will turn all the code in your program into assembly code at first before your program could be run.
 
+assembly is the instruction sequence of your code. It is the intermediate level of your code to understand how your program will run on the platform. Therefore, you are highly recommanded to figure out the assembly code of your code especially the hot function while tunning performance.
+
+`objdump` and `gcc -S` are two ways to get the assembly.
+
+### Compiler Options
