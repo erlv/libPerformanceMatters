@@ -23,7 +23,12 @@
 ### Hard Disk
 
 
-## Why we need optimization based on the memory hierarchy
+### Why we need optimization based on the memory hierarchy
+
+
+## The normal Operation cost supported by CPU
+
+
 
 
 ## How to Optimize the code
@@ -32,6 +37,30 @@
 
 
 ### Data-Level Parallelism
+CPU SIMD Instruction Extension
+- ARM Neon
+ - 128bit SIMD register. 
+  - 2-way 64bit double/int64_t
+  - 4-way 32bit float/int32_t
+  - 8-way 16bit int16_t
+  - 16-way 8bit int8_t
+ - Designed like DSP instruction set.
+ - Additional compiler type check based on the vector types
+- Intel SSE/AVX/AVX512
+ -  128bit SIMD SSE register/256bit SIMD AVX register/ 512bit SIMD AVX512 register
+  - 128bit/256bit integer
+  - 128bit/256bit 4-way/8-way float
+  - 128bit/256bit 2-way/4-way double
+ - Designed like register operation instruction set.
+ - The type checking only based on the whole register type.
+ 
+#### Intrinsic VS Embeded Asm
+ 
+ 
+
+
+
+
 
 ### Thread-Level Parallelism
 
