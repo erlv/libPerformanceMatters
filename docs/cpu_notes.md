@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
 ```
 
 ### gprof
-Gprof provide an easy way to quickly find out the hot function in your program. It works on both X86 and ARM platform.
+Gprof provide an easy way to quickly find out the hot function in your program. It works on both X86 and ARM platform. Gprof will increase your program run time by around 30%.
 
 ```bash
 $ gcc -pg hello.c -o hello.o
@@ -122,7 +122,7 @@ gprof is a good tool to get the hot function while the program is running. It is
 - Compiler Inserts code at the head and tail of each function in your program.
 - Linker will also try to link the standard library with `-pg` support.
 
-`gmon.out` file contain the timing information. `$gprof` command will read the `gmon.out` file automatically, and get the information about hot functions.
+`gmon.out` file contain the timing information. `gprof` command will read the `gmon.out` file automatically, and get the information about hot functions.
 
 ### Oprofile
 
