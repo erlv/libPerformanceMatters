@@ -75,9 +75,54 @@ CPU SIMD Instruction Extension
 
 
 ## Performance Tuning Tools
+Let's take the following code as an example.
+
+```c++
+#include <stdio.h>
+int a(void) {
+  int i=0,g=0;
+  while(i++<100000) {
+     g+=i;
+  }
+  return g;
+}
+int b(void) {
+  int i=0,g=0;
+  while(i++<400000) {
+    g+=i;
+  }
+  return g;
+}
+int main(int argc, char** argv) {
+   int iterations;
+   if(argc != 2) {
+      printf("Usage %s <No of Iterations>\n", argv[0]);
+      exit(-1);
+   } else
+      iterations = 50000; //atoi(argv[1]);
+   printf("No of iterations = %d\n", iterations);
+   while(iterations--) {
+      a();
+      b();
+   }
+}
+```
 
 ### gprof
+Gprof provide an easy way to quickly find out the hot function in your program. It works on both X86 and ARM platform.
 
+```bash
+$ gcc -pg hello.c -o hello.o
+$ gcc -pg hello.o -o hello.exe
+$ ./hello.exe # A new gmon.out file will be generated here.
+$ gprof hello.exe > hello.exe.log
+```
+gprof is a good tool to get the hot function while the program is running. It is done by:
+- compile and link with `-pg` option to make your program support gprof
+- Compiler Inserts code at the head and tail of each function in your program.
+- Linker will also try to link the standard library with `-pg` support.
+
+`gmon.out` file contain the timing information. `$gprof` command will read the `gmon.out` file automatically, and get the information about hot functions.
 
 ### Oprofile
 
