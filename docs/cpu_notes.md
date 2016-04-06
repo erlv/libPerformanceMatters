@@ -79,6 +79,8 @@ Let's take the following code as an example.
 
 ```c++
 #include <stdio.h>
+#include <stdlib.h>
+
 int a(void) {
   int i=0,g=0;
   while(i++<100000) {
@@ -93,13 +95,10 @@ int b(void) {
   }
   return g;
 }
+
 int main(int argc, char** argv) {
    int iterations;
-   if(argc != 2) {
-      printf("Usage %s <No of Iterations>\n", argv[0]);
-      exit(-1);
-   } else
-      iterations = 50000; //atoi(argv[1]);
+   iterations = 50000; 
    printf("No of iterations = %d\n", iterations);
    while(iterations--) {
       a();
