@@ -44,8 +44,34 @@ If we use instruction to pipeline all the instructions, we could only wait for o
 
 ![4-stage pipelined instructions](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Pipeline%2C_4_stage.svg/627px-Pipeline%2C_4_stage.svg.png)
 
+For the above pipeline, each instruction is split into at-most 4-steps to run. In theory, if we split instruction into more steps, each step will take shorter time to run, and then we could increase the CPU frequency, and then the latency between two adjuscent instruction finish will be smaller. However, as the pipeline goes deeper, more cycle is needed if we pre-execute the wrong direction for a branch instruction. Therefore there is a trade off here.
+
 
 ### The evolution of Intel X86 Micro Architecture
+For the last few years, Intel X86 processor keep improving its micro architecture for better performance.
+
+#### 2006 Intel Core 2 Micro Architecture
+![Intel Core 2 Architecture](https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Intel_Core2_arch.svg/518px-Intel_Core2_arch.svg.png)
+
+
+#### 2008 Intel Nehalem Micro Architecture
+![Intel Nehalem Micro Architecture](https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Intel_Nehalem_arch.svg/614px-Intel_Nehalem_arch.svg.png)
+
+
+#### 2011 Intel Sandy Bridge Micro Architecture
+
+![Intel Sandy Bridge Micro Architecture](http://cfile29.uf.tistory.com/image/1859B3244C91F1759E90C7)
+
+#### 2013 Intel Haswell Micro Architecture
+
+![Intel Haswell Micro Architecture](http://images.anandtech.com/reviews/cpu/intel/Haswell/Architecture/haswellexec.png)
+
+#### 2015 Intel Skylake Micro Architecture
+
+![Intel Skylake Micro Architecture](http://www.info.univ-angers.fr/~richer/ens/l3info/ao/img/intel_skylake.png)
+
+
+
 
 
 ### The evolution of ARM Cortex Micro Architecture
