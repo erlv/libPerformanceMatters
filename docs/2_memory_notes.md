@@ -11,7 +11,7 @@ TLB | 12 - 4096 | 0.5 -1 | 10 - 100 | 0.01% - 1%
 
 ### Memory Hierarchy details on ARM Processor
 
-The following are detail data for Samsuny Exynos 4210's implementation of Cortex-A9
+The following are detail data for Samsuny Exynos 4210's implementation of `Cortex-A9`
 - 4-bytes range cross penalty = 1 cycle
 - 8-bytes range cross penalty = 6 cycles
 - CPU can handle TLB misses in parallel (it works with two parallel accesses at least).
@@ -24,7 +24,7 @@ The following are detail data for Samsuny Exynos 4210's implementation of Cortex
 - RAM Read B/W (Read, 4 Bytes step) = 890 MB/s
 - RAM Read B/W (Read, 32 Bytes step) = 1010 MB/s
 - RAM Write B/W (Sequential, or 4 bytes step) = 1600 MB/s
-- RAM Write B/W (32 bytes step) = 725 MB/s, probably write allocate is enabled 
+- RAM Write B/W (32 bytes step) = 725 MB/s, probably write allocate is enabled
 
 ## Cache
 Cache Usually includes:
@@ -33,12 +33,12 @@ Cache Usually includes:
 - L2 Cache
 - L3 Cache
 - TLB (Translation Lookaside Buffer)
- - If our platform support virtual memory address management.
- 
+  - If our platform support virtual memory address management.
+
 ### Cache Line
 While transfer data between Cache and Memory, it is by blocks of fixed size which is called cache line.
 
-Meanwhile the cache is split by the size of cache line as well. 
+Meanwhile the cache is split by the size of cache line as well.
 The cache line size is usually 32B or 64B.
 
 ![How Cache Line works](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/CacheLines.png)
@@ -73,8 +73,10 @@ and physical address happens, it is stored on the TLB.
 ### The alignment problem
 
 #### Data Alignment during memory access
-While programming, we treat each element in the array as an isolated element, 
-we could simply load and store any size of them with the same latency anytime. 
+
+
+While programming, we treat each element in the array as an isolated element,
+we could simply load and store any size of them with the same latency anytime.
 It is mostly like the following figure.
 
 ![How Programmers see memory](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/da_programmer.jpg)

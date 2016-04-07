@@ -1,7 +1,7 @@
 # Code Optimizations
 This page focus on how to modify/write our C/C++ or embedded assembly code to improve performance.
 
-Why we need to know code optimization and do it manually even we already have advanced optimization compiler? 
+Why we need to know code optimization and do it manually even we already have advanced optimization compiler?
 Since the compiler could only do the code transformation when it can sure that the transformation is safe and benificial.
 It is hard for it to ensure this for many circumstance, and then failed to optimize the code.
 
@@ -61,13 +61,13 @@ void foo2_opt(int32_t *a, uint32_t len, int32_t *sum) {
     *sum = temp;
 }
 ```
- 
+
 
 ### Increasing DLP
 
 CPU SIMD Instruction Extension
 - ARM Neon
- - 128bit SIMD register. 
+ - 128bit SIMD register.
   - 2-way 64bit double/int64_t
   - 4-way 32bit float/int32_t
   - 8-way 16bit int16_t
@@ -88,12 +88,12 @@ CPU SIMD Instruction Extension
  C Intrinsics could generally get the same performance improvement if we write the code correctly, since most of the time we are optimizing hot functions and loops. In most of the case we rely on SIMD extensions to optimize the code, and compiler already have intrinsic/type support for such kind of extension.
 
  compiler could also help to do type checking, register allocation, instruction scheduling based on the C code as well. Usually the ABI could be handled correctly as well. While if we use assembly, we need to maintain the ABI by ourselves.
- 
+
  Since the compiler is used to generate assembly finaly, and meanwhile compiler have limitations about program analysis and optimization, hand tuned assembly could have better performance sometimes.
 
 
 ### Function Inlining to improve ILP and instruction scheduling
- 
+
 
 ### Optimizations for branch and jmp instructions
 
@@ -106,7 +106,7 @@ conditional move instruction as well, but defaultly conditional branch instructi
 
 ```c++
 int32_t min( int32_t a, int32_t b) {
-    if (a < b) 
+    if (a < b)
         return a;
     else
         return b;
@@ -145,4 +145,3 @@ tens of cycles.
 #### Instruction Bundling
 
 #### Advanced Software Pipeline
-
