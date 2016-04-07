@@ -23,7 +23,7 @@ int b(void) {
 
 int main(int argc, char** argv) {
    int iterations;
-   iterations = 50000; 
+   iterations = 50000;
    printf("No of iterations = %d\n", iterations);
    while(iterations--) {
       a();
@@ -49,6 +49,7 @@ gprof is a good tool to get the hot function while the program is running. It is
 `gmon.out` file contain the timing information. `gprof` command will read the `gmon.out` file automatically, and get the information about hot functions.
 
 ## Oprofile
+
 Oprofile could not only tell you the hot function, but also a lot of performance counter values which are very useful to find out why the program runs slowly.
 
 - [Performance Counters which oprofile can tell you on ARM Cortex-A7](http://oprofile.sourceforge.net/docs/armv7-ca7-events.php)
@@ -64,7 +65,16 @@ The performance counters are usually the counters supported by the microarchitec
 
 Oprofile have a rich support on X86 platform, but on ARM Linux, especially Android, the support is very limited. But it is also very helpful to get an idea about the performance feature of the program.
 
+### What to profile
+- Cache misses: This is the #1 source of stalls in most program.
+- Load-hit-stores
+- Microcoded operations
+- Branch mispredicts
+- Sequential floating-point ops
+
+
 ## Assembly analysis
+
 Basically, no matter what kind of platform you are try to run your program, assembly is the most straight forward way to know how your program will run on the platform. And for C/C++ language and embeded assembly, compiler will turn all the code in your program into assembly code at first before your program could be run.
 
 assembly is the instruction sequence of your code. It is the intermediate level of your code to understand how your program will run on the platform. Therefore, you are highly recommanded to figure out the assembly code of your code especially the hot function while tunning performance.
@@ -73,9 +83,9 @@ assembly is the instruction sequence of your code. It is the intermediate level 
  - `objdump -S` directly analyse the binary (executable or object) file, and get the instruction sequences which will be executed.
  - `gcc -S` generated assembly by the `gcc` compiler. `gcc` compiler analyse the C code, and based on the C code and the target architecture to generate assembly.
  - `as` eats the compiler generated assembly, and then generate object file which could be used by `objdump -S`. Sometimes, on some architecture, `as` might automatically expand assembly macro into multiple instructions, or combine several instructions into an assembly macro. We could treat `objdump -S` generated assembly as the final assembly.
- 
- 
- 
+
+
+
 ## References
 - [Oprofile](http://oprofile.sourceforge.net/news/)
-- [Gprof](https://users.cs.duke.edu/~ola/courses/programming/gprof.html) 
+- [Gprof](https://users.cs.duke.edu/~ola/courses/programming/gprof.html)

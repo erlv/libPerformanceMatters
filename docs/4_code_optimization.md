@@ -5,6 +5,9 @@ Why we need to know code optimization and do it manually even we already have ad
 Since the compiler could only do the code transformation when it can sure that the transformation is safe and benificial.
 It is hard for it to ensure this for many circumstance, and then failed to optimize the code.
 
+## Warning
+Please firstly think about whether it is possible to improve your code from
+the algorithm's side,  spend one or two days to find out the more efficient algorithm is better than spend one or two days simply tune your code only to take advantage of the underlying hardware.
 
 ## How to do quantitive analysis on optimizations
 Use speedup factor to show the performance changes.
@@ -22,7 +25,9 @@ Currently libPerformanceMatters only cares about CPU-intensive and Memory-intens
 
 
 
-## Get rid of redundant operations
+## General Optimization Topics
+
+### Get rid of redundant operations
 Is there any computations inside the loop redudant? Or could be moved outside of the loop?
 
 ```c++
@@ -62,34 +67,46 @@ void foo2_opt(int32_t *a, uint32_t len, int32_t *sum) {
 }
 ```
 
-
-### Increasing DLP
-
-CPU SIMD Instruction Extension
-- ARM Neon
- - 128bit SIMD register.
-  - 2-way 64bit double/int64_t
-  - 4-way 32bit float/int32_t
-  - 8-way 16bit int16_t
-  - 16-way 8bit int8_t
- - Designed like DSP instruction set.
- - Additional compiler type check based on the vector types
-- Intel SSE/AVX/AVX512
- -  128bit SIMD SSE register/256bit SIMD AVX register/ 512bit SIMD AVX512 register
-  - 128bit/256bit integer
-  - 128bit/256bit 4-way/8-way float
-  - 128bit/256bit 2-way/4-way double
- - Designed like register operation instruction set.
- - The type checking only based on the whole register type.
+### Loop Vectorization
 
 
-## C Intrinsic VS Embeded Assembly
+#### Traps for Loop vectorization
 
- C Intrinsics could generally get the same performance improvement if we write the code correctly, since most of the time we are optimizing hot functions and loops. In most of the case we rely on SIMD extensions to optimize the code, and compiler already have intrinsic/type support for such kind of extension.
+##### Check the types for all the loop operations
+```c++
+char a[20];
+int b[20];
+void foo() {}
+  int i=0;
+  for(; i < 20; i++) {
+    b[i] = a [i];
+  }
+}
+```
+When we say vectorize the loop by 4, it means the smallest type in the loop will be
+run in 4-way parallelly. Since the CPU SIMD reigsters have fixed width, for wider types
+in the loop, we need to split it into several SIMD variables, Otherwise there will be
+correctness issues.
 
- compiler could also help to do type checking, register allocation, instruction scheduling based on the C code as well. Usually the ABI could be handled correctly as well. While if we use assembly, we need to maintain the ABI by ourselves.
+##### Be careful of unaligned memory access
 
- Since the compiler is used to generate assembly finaly, and meanwhile compiler have limitations about program analysis and optimization, hand tuned assembly could have better performance sometimes.
+```c++
+int a[20];
+int b[30];
+void foo() {}
+  int i=0;
+  for(; i < 20; i++) {
+    b[i+3] = a [i];
+  }
+}
+```
+
+Basically, aligned memory access is most efficient. For processor without unaligned
+memory access support, there will be correctness issues if we vectorize the above loop.
+Due to the hardware limitation, although current ARM (Cortex-A7) and X86 (SSE or later) already have unaligned load and store support, but it is slower than aligned load/store. Usually, to hardware it means one additional load/store operation.
+
+
+##### Sometimes you might not get performance improvement
 
 
 ### Function Inlining to improve ILP and instruction scheduling
@@ -137,7 +154,20 @@ tens of cycles.
 
 #### Loop Fussion/Fission/Spilt
 
-### Code Size Optimizations
+
+
+## C Intrinsic VS Embeded Assembly
+
+ C Intrinsics could generally get the same performance improvement if we write the code correctly, since most of the time we are optimizing hot functions and loops. In most of the case we rely on SIMD extensions to optimize the code, and compiler already have intrinsic/type support for such kind of extension.
+
+ compiler could also help to do type checking, register allocation, instruction scheduling based on the C code as well. Usually the ABI could be handled correctly as well. While if we use assembly, we need to maintain the ABI by ourselves.
+
+ Since the compiler is used to generate assembly finaly, and meanwhile compiler have limitations about program analysis and optimization, hand tuned assembly could have better performance sometimes.
+
+## Optimizations for Code size
+- Do not do loop unrolling
+- Do not do function inlining
+- Use shorter instruction sequence if possible
 
 
 ### Optimizations for VLIW Processor (DSP)
@@ -145,3 +175,51 @@ tens of cycles.
 #### Instruction Bundling
 
 #### Advanced Software Pipeline
+
+## Top tips
+
+### Reduce Cache miss rate
+Data Cache is the #1 source of stalls in most programs.
+
+The following ways can help to increase the data cache hit rate:
+- reorganizing offending data structures to have better locality
+- pack structures and numerical types down to eliminate wasted bytes
+- prefetch data wherever possible to reduce stalls
+
+
+### Improve Load-hit-store operations
+For your C code, compiler has safe assumptions about pointer aliasing.
+When move data between disconnected register sets via memory, such as pointer type casting together with load and store,
+- use `__restrict` liberally to promise the compiler about aliasing
+- Eliminate memory based type casting among float/vector/int types.
+
+### Reduce Branch mispredicts
+If the branch predictor of the CPU guess wrong, the pipeline will be cleaned.
+- Find out in your hot loop where the CPU is spending a lot if time refiling the instruction pipeline after a branch, and use branch hinting if possible. `__builtin_expect()`
+- Replace branches with conditional-move when possible. Especially Floating point operations since they have deepper pipeline.
+
+
+### Vectorize sequential operations in your loop
+
+CPU SIMD Instruction Extension
+- ARM Neon
+ - 128bit SIMD register.
+  - 2-way 64bit double/int64_t
+  - 4-way 32bit float/int32_t
+  - 8-way 16bit int16_t
+  - 16-way 8bit int8_t
+ - Designed like DSP instruction set.
+ - Additional compiler type check based on the vector types
+- Intel SSE/AVX/AVX512
+ -  128bit SIMD SSE register/256bit SIMD AVX register/ 512bit SIMD AVX512 register
+  - 128bit/256bit integer
+  - 128bit/256bit 4-way/8-way float
+  - 128bit/256bit 2-way/4-way double
+ - Designed like register operation instruction set.
+ - The type checking only based on the whole register type.
+
+ ## Top Traps
+
+ ### floating-point operatios
+
+ ### Int operations
