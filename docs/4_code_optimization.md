@@ -144,7 +144,91 @@ tens of cycles.
 ### Loop unrolling to improve ILP on OoO processor
 
 
+### Loop Interchange for memory access optimization
+
+```c++
+/* Before */
+for (j=0; j < 100; j++)
+  for (i=0; i < 5000; i++)
+     x[i][j] = 2 * x[i][j];
+```
+For each iteration of inner loop-i, we access the element of each column, which is not adjacent access of memory, and it is almost always cache miss.
+
+The following code interchanged the loop, and then the array access is better by only access each adjacent element. Since the processor hardware will prefetch the adjacent data automatically from memory to cache, the code will always cache hit, and the performance could be improved a lot.
+
+```c++
+/* after */
+for (i=0; i < 5000; i++)
+  for (j=0; j < 100; j++)
+    x[i][j] = 2 * x[i][j];
+```
+
+
 ### Loop Tiling for memory access optimizations
+Loop Tiling, AKA loop blocking, it tries to split the array access by small blocks, and make sure:
+1. The data in the block will be accessed firstly.
+2. The data could be hold in cache automatically.
+
+For the following code, if N is not-so-small, it is hard for the cache to hold all three array `x[N][N]`, `y[N][N]` and `z[N][N]`.
+
+```c++
+/* Before */
+for (i=0; i < N; i++)
+  for(j=0; j < N; j++) {
+    r = 0;
+    for (k=0; k < N; k++) {
+      r += y[i][k]* z[k][j];
+    }
+    x[i][j]=r;
+  }
+```
+
+While N=6, and i=1, and j iterates in range [3, 6). Following is the 3 2-D arraies' access range:
+- x: `x[1][3:]`
+- y: `y[1][:]`x3
+- z: `z[:][3:]`x3
+
+There will be a lot of cache miss.
+
+The following code is better:
+
+```c++
+/* After */
+for(jj=0; jj < N; jj+=B)
+  for(kk=0; kk < N; kk+=B)
+    for(i=0; i < N; i++)
+      for(j=jj; j < min(jj+B, N); j++) {
+        r = 0;
+        for(k=kk; k < min(kk+B, N); k++)
+          r = r + y[i][k] * z[k][j];
+        x[i][j] = x[i][j] + r;
+      }
+```
+The inner i-j-k loop have better locality now, since the access range is:
+- x: `x[1][jj:jj+B]`
+- y: `y[1][kk:kk+B]`
+- z: `z[kk:kk+B][jj:jj+B]`
+
+z only need a `BXB` size of cache, while x and y only needed  `1XB`,
+
+### Prefetch to help hardware put useful data in Cache
+#### Why correctly insert prefetch instruction could help to improve performance?
+The cache's hardware predicator is not smart enough, and can not predicate what
+the next memory access will be all the time. Non-block Prefetch instruction
+could be inserted to solve this problem.
+
+#### How to insert prefetch instruction correctly?
+
+
+
+```c++
+/* Before */
+for (i=0; i < 3; i++) {
+  for (j=0; j < 100; j++) {
+    a[i][j] = b[j][0] * b[j+1][0];
+  }
+}
+
 
 ### Other loop optimizations
 

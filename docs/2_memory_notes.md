@@ -2,11 +2,20 @@
 
 ## Performance factors of different level of memory
 
+Personal Mobile Devices:
+
 Name | Size | Hit Time | Miss Penalty | Miss rate
 ----- | ---- | --- | ----------- | --------
-L1-D | | | |
-L1-I | | | |
+Register| 500B | 0.5ns | Invalid | Invalid |
+L1 | 64KB | 2ns | |
+L2 | 256KB | 10-20ns  | |
 TLB | 12 - 4096 | 0.5 -1 | 10 - 100 | 0.01% - 1%
+Memory | 256-512MB | 50-100ns | |
+
+
+### Memory Hierarchy Details on X86 Sandy Bridge Processor
+
+![Intel Sandy Bridge Processor Memory Subsystem](https://raw.githubusercontent.com/erlv/libPerformanceMatters/master/docs/images/sandybridge_memory_subsystem.png)
 
 
 ### Memory Hierarchy details on ARM Processor
