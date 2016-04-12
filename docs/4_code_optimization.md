@@ -111,6 +111,29 @@ Due to the hardware limitation, although current ARM (Cortex-A7) and X86 (SSE or
 
 ### Function Inlining to improve ILP and instruction scheduling
 
+In C/C++, `inline` keyword is only a hint for compiler long time ago. In fact, previously, `inline`, `extern` and `static` are designed for linker, not compiler.
+
+The tips of using `inline` keyword:
+- `inline` is only useful in current `.c/.cpp` file if is not declared and defined in the header file, and meanwhile `lto` is not turned on.
+- Use `inline` for small functions in the header file if you want
+- Do not add `inline` to a function when you think your code could run faster if the compiler `inline`s it.
+- If you really think inline the function could help to improve the perforance, and the compiler does not do it currently. use ` __attribute__((always_inline))`
+
+#### Function Inlining VS Macro
+Function Inlining could have most the advantages of Function-like Macro.
+With inline function, Compiler can help to check the type matching for you,
+and make the code easier to debug and more readable.
+
+Only consider use macro for the following conditions:
+- Lazy argument evaluation. `#define SELECT(f, a, b) ((f)? (a): (b))`. When use inline function,
+  parm `b` need to be evaluated at first.
+- Access to context. if you want to turn the parameter name into a string like `#arg`.
+- Type independence code writing (C++ already have template for this).
+  `#define max(a, b) ((a>b)? (a): (b))` .
+- Need `return` in our macro: When use macro, the `return` stmt will still in the expanded code,
+  while inline function can not keep it there.
+
+
 
 ### Optimizations for branch and jmp instructions
 
